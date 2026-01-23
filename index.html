@@ -83,8 +83,8 @@
     <label>Gunta</label>
     <input type="number" id="gunta" placeholder="Enter gunta (0–39)">
 
-    <button class="btn-primary" onclick="convertAcre()">Convert</button>
-    <button class="btn-clear" onclick="clearAcre()">Clear</button>
+    <button type="button" class="btn-primary" onclick="convertAcre()">Convert</button>
+    <button type="button" class="btn-clear" onclick="clearAcre()">Clear</button>
 
     <div class="result" id="acreResult"></div>
 </div>
@@ -101,8 +101,8 @@
     <label>Depth (in feet)</label>
     <input type="number" id="depth" placeholder="Enter depth in feet">
 
-    <button class="btn-primary" onclick="calculateStorage()">Calculate Storage</button>
-    <button class="btn-clear" onclick="clearStorage()">Clear</button>
+    <button type="button" class="btn-primary" onclick="calculateStorage()">Calculate Storage</button>
+    <button type="button" class="btn-clear" onclick="clearStorage()">Clear</button>
 
     <div class="result" id="storageResult"></div>
 
@@ -114,4 +114,49 @@
 
 <script>
 function convertAcre() {
-    let
+    let acre = parseFloat(document.getElementById("acre").value) || 0;
+    let gunta = parseFloat(document.getElementById("gunta").value) || 0;
+
+    if (gunta < 0 || gunta >= 40) {
+        document.getElementById("acreResult").innerHTML =
+            "Gunta must be between 0 and 39";
+        return;
+    }
+
+    let totalAcre = acre + (gunta / 40);
+
+    document.getElementById("acreResult").innerHTML =
+        "Total Area = " + totalAcre.toFixed(2) + " acres";
+}
+
+function clearAcre() {
+    document.getElementById("acre").value = "";
+    document.getElementById("gunta").value = "";
+    document.getElementById("acreResult").innerHTML = "";
+}
+
+function calculateStorage() {
+    let area = parseFloat(document.getElementById("area").value);
+    let depth = parseFloat(document.getElementById("depth").value);
+
+    if (isNaN(area) || isNaN(depth) || area <= 0 || depth <= 0) {
+        document.getElementById("storageResult").innerHTML =
+            "Please enter valid values.";
+        return;
+    }
+
+    let storage = area * depth * 1233.48;
+
+    document.getElementById("storageResult").innerHTML =
+        "Storage Capacity = " + storage.toFixed(2) + " cubic metres";
+}
+
+function clearStorage() {
+    document.getElementById("area").value = "";
+    document.getElementById("depth").value = "";
+    document.getElementById("storageResult").innerHTML = "";
+}
+</script>
+
+</body>
+</html>
