@@ -37,15 +37,25 @@
         button {
             width: 100%;
             padding: 10px;
-            background: #1976d2;
-            color: white;
-            border: none;
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
+            border: none;
+            margin-bottom: 8px;
         }
-        button:hover {
+        .btn-primary {
+            background: #1976d2;
+            color: white;
+        }
+        .btn-primary:hover {
             background: #125aa0;
+        }
+        .btn-clear {
+            background: #e0e0e0;
+            color: #333;
+        }
+        .btn-clear:hover {
+            background: #cfcfcf;
         }
         .result {
             margin-top: 10px;
@@ -73,14 +83,17 @@
     <label>Gunta</label>
     <input type="number" id="gunta" placeholder="Enter gunta (0–39)">
 
-    <button onclick="convertAcre()">Convert</button>
+    <button class="btn-primary" onclick="convertAcre()">Convert</button>
+    <button class="btn-clear" onclick="clearAcre()">Clear</button>
 
     <div class="result" id="acreResult"></div>
 </div>
 
 <!-- Storage Calculator -->
 <div class="calculator">
-    <h2 style="color:#1ca3ec">Water Storage Calculator<br>for Minor Irrigation Census</h2>
+    <h2 style="color:#1ca3ec">
+        Water Storage Calculator<br>for Minor Irrigation Census
+    </h2>
 
     <label>Area (in acres)</label>
     <input type="number" id="area" placeholder="Enter area in acres">
@@ -88,7 +101,8 @@
     <label>Depth (in feet)</label>
     <input type="number" id="depth" placeholder="Enter depth in feet">
 
-    <button onclick="calculateStorage()">Calculate Storage</button>
+    <button class="btn-primary" onclick="calculateStorage()">Calculate Storage</button>
+    <button class="btn-clear" onclick="clearStorage()">Clear</button>
 
     <div class="result" id="storageResult"></div>
 
@@ -100,37 +114,4 @@
 
 <script>
 function convertAcre() {
-    let acre = parseFloat(document.getElementById("acre").value) || 0;
-    let gunta = parseFloat(document.getElementById("gunta").value) || 0;
-
-    if (gunta < 0 || gunta >= 40) {
-        document.getElementById("acreResult").innerHTML =
-            "Gunta must be between 0 and 39";
-        return;
-    }
-
-    let totalAcre = acre + (gunta / 40);
-
-    document.getElementById("acreResult").innerHTML =
-        "Total Area = " + totalAcre.toFixed(2) + " acres";
-}
-
-function calculateStorage() {
-    let area = parseFloat(document.getElementById("area").value);
-    let depth = parseFloat(document.getElementById("depth").value);
-
-    if (isNaN(area) || isNaN(depth) || area <= 0 || depth <= 0) {
-        document.getElementById("storageResult").innerHTML =
-            "Please enter valid values.";
-        return;
-    }
-
-    let storage = area * depth * 1233.48;
-
-    document.getElementById("storageResult").innerHTML =
-        "Storage Capacity = " + storage.toFixed(2) + " cubic metres";
-}
-</script>
-
-</body>
-</html>
+    let
