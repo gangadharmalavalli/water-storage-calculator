@@ -11,19 +11,20 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             flex-direction: column;
         }
         .calculator {
             background: white;
             padding: 25px;
             border-radius: 10px;
-            width: 320px;
+            width: 360px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         label {
             font-weight: bold;
@@ -47,7 +48,7 @@
             background: #125aa0;
         }
         .result {
-            margin-top: 15px;
+            margin-top: 10px;
             font-weight: bold;
             text-align: center;
             color: red;
@@ -62,8 +63,24 @@
 </head>
 <body>
 
+<!-- Acre–Gunta Calculator -->
 <div class="calculator">
-    <h2 style="color:#1ca3ec">Water Storage Calculator for Minor Irrigation Census</h2>
+    <h2 style="color:#1976d2">Acre–Gunta to Acre Calculator</h2>
+
+    <label>Acre</label>
+    <input type="number" id="acre" placeholder="Enter acre">
+
+    <label>Gunta</label>
+    <input type="number" id="gunta" placeholder="Enter gunta (0–39)">
+
+    <button onclick="convertAcre()">Convert</button>
+
+    <div class="result" id="acreResult"></div>
+</div>
+
+<!-- Storage Calculator -->
+<div class="calculator">
+    <h2 style="color:#1ca3ec">Water Storage Calculator<br>for Minor Irrigation Census</h2>
 
     <label>Area (in acres)</label>
     <input type="number" id="area" placeholder="Enter area in acres">
@@ -71,29 +88,46 @@
     <label>Depth (in feet)</label>
     <input type="number" id="depth" placeholder="Enter depth in feet">
 
-    <button onclick="calculate()">Calculate</button>
+    <button onclick="calculateStorage()">Calculate Storage</button>
 
-    <div class="result" id="result"></div>
+    <div class="result" id="storageResult"></div>
 
     <div class="footer">
-        © Webpage developed by Gangadhar, Statistical Inspector, Malavalli Taluk Office
+        © Webpage developed by Gangadhar,<br>
+        Statistical Inspector, Malavalli Taluk Office
     </div>
 </div>
 
 <script>
-function calculate() {
+function convertAcre() {
+    let acre = parseFloat(document.getElementById("acre").value) || 0;
+    let gunta = parseFloat(document.getElementById("gunta").value) || 0;
+
+    if (gunta < 0 || gunta >= 40) {
+        document.getElementById("acreResult").innerHTML =
+            "Gunta must be between 0 and 39";
+        return;
+    }
+
+    let totalAcre = acre + (gunta / 40);
+
+    document.getElementById("acreResult").innerHTML =
+        "Total Area = " + totalAcre.toFixed(2) + " acres";
+}
+
+function calculateStorage() {
     let area = parseFloat(document.getElementById("area").value);
     let depth = parseFloat(document.getElementById("depth").value);
 
     if (isNaN(area) || isNaN(depth) || area <= 0 || depth <= 0) {
-        document.getElementById("result").innerHTML = "Please enter valid values.";
-        document.getElementById("result").style.color = "red";
+        document.getElementById("storageResult").innerHTML =
+            "Please enter valid values.";
         return;
     }
 
     let storage = area * depth * 1233.48;
 
-    document.getElementById("result").innerHTML =
+    document.getElementById("storageResult").innerHTML =
         "Storage Capacity = " + storage.toFixed(2) + " cubic metres";
 }
 </script>
